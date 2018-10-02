@@ -1,0 +1,5 @@
+- name: ElasticSearch
+  hosts: es
+  become: yes
+  roles:
+    - elasticsearch

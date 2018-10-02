@@ -1,0 +1,45 @@
+########## ElasticSearch Installation and configuration #############
+
+
+- name: Install Openjdk and wget
+  apt:
+   name: "{{ item }}"
+   update_cache: yes
+   state: present
+  with_items:
+       - openjdk-8-jdk 
+       - wget 
+       - apt-transport-https
+
+- name: Adding GPG-Key to remote machine
+  apt_key:
+     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+     state: present
+
+
+- name: Adding ELK repo url to sources
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+    filename: elastic-6.x.list
+    state: present
+
+- name: Install ElasticSearch
+  apt:
+   name: elasticsearch
+   update_cache: yes
+   state: present
+
+- name: Start and enable elasticsearch service
+  service:
+   name: elasticsearch
+   state: started
+   enabled: yes
+
+- name: Wait for few seconds for Elasticsearch to get started
+  pause: seconds=60
+
+- shell: "curl -X GET http://localhost:9200"
+  register: es
+
+- debug:
+    var: es.stdout_lines

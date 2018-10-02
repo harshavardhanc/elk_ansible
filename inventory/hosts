@@ -1,0 +1,2 @@
+[es]
+172.18.0.2 ansible_ssh_user=root ansible_password=root ansible_python_interpreter=/usr/bin/python3
