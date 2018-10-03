@@ -1,0 +1,10 @@
+########## Install and configure Logstash
+
+
+- name: Install logstash
+  apt:
+    name: logstash
+    update_cache: yes
+    state: present
+
+- name: 
