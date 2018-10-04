@@ -7,4 +7,17 @@
     update_cache: yes
     state: present
 
-- name: 
+- name: Copy logstash config file to remote machine
+  copy:
+    src: files/logstash.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+    mode: 644
+    owner: root
+
+- name: Restart and enable logstash
+  service: 
+    name: logstash
+    state: restarted
+    enabled: yes
+
+
