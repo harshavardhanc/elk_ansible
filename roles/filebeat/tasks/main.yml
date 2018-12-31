@@ -1,0 +1,44 @@
+######### Install and configure Filebeat #########
+
+- name: Install https support and wget
+  apt:
+   name: "{{ item }}"
+   update_cache: yes
+   state: present
+  with_items:
+       - wget 
+       - apt-transport-https
+
+
+- name: Adding GPG key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+
+- name: Adding repo url to source list
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main
+    filename: elastic-6.x.list
+    state: present
+
+
+- name: Copy yaml file to remote machine
+  template:
+   src: filebeat.yml
+   dest: /etc/filebeat.yml
+   mode: 0644
+   owner: root
+
+- name: Install filebeat
+  apt:
+   name: filebeat
+   update_cache: yes
+   state: present
+
+- name: Start filebeat service
+  service:
+    name: filebeat
+    state: started
+    enabled: yes
+

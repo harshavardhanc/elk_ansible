@@ -1,5 +1,7 @@
 - name: ElasticSearch
-  hosts: es
+  hosts: "es"
+  vars_files:
+    - ['{{inventory_dir}}/group_vars/main.yml']
   become: yes
   roles:
-    - elasticsearch
+    - filebeat

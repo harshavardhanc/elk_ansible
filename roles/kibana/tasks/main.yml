@@ -1,0 +1,21 @@
+########### Install and Configure Kibana ##########
+
+
+- name: Install Kibana
+  apt:
+   name: kibana
+   update_cache: yes
+   state: present
+
+- name: Update kibana config file
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    regexp: '^#server.host: "localhost"'
+    line: 'server.host: "0.0.0.0"'
+  
+- name: Restart kibana
+  service:
+    name: kibana
+    state: restarted
+    enabled: yes
+

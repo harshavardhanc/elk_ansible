@@ -1,0 +1,7 @@
+---
+
+es-1:
+ test: "this is a new value"
+
+logstash:
+  test: "this is logstash value"
